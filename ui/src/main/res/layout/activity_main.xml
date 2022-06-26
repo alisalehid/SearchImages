@@ -1,0 +1,27 @@
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/nav_host"
+            android:name="com.payback.ui.mainFragment.MainFragment"
+            android:tag="nav_host"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/app_nav"
+            />
+
+
+    </FrameLayout>
+
+
+
+</layout>

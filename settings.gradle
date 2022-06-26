@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "CodingChallenge"
 include ':app'
+include ':ui'
+include ':data'
