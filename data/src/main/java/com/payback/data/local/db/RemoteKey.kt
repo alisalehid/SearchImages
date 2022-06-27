@@ -8,7 +8,7 @@ data class RemoteKey(
 
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val imageId: Int,
-    val previous: Int?,
+    val previousPage: Int?,
     val nextPage: Int?
 ) {
 }

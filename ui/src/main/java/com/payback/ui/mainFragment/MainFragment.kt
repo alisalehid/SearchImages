@@ -7,8 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.payback.ui.R
+import com.payback.ui.databinding.FragmentMainBinding
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(R.layout.fragment_main) {
+
+
+    private lateinit var binding: FragmentMainBinding
+
 
     companion object {
         fun newInstance() = MainFragment()

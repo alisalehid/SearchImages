@@ -6,7 +6,7 @@ import com.payback.data.local.repository.SearchImagesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class SearchUseCase @Inject constructor(private val searchImagesRepository: SearchImagesRepository){
+class Search @Inject constructor(private val searchImagesRepository: SearchImagesRepository){
 
     @OptIn(ExperimentalPagingApi::class)
     suspend fun invoke(load: String): Flow<PagingData<Image>>{
