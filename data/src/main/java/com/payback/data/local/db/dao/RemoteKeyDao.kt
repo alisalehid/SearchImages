@@ -1,10 +1,10 @@
 package com.payback.data.local.db.dao
 
+import com.payback.data.local.db.RemoteKey
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.payback.data.local.db.RemoteKey
 
 @Dao
 interface RemoteKeyDao {

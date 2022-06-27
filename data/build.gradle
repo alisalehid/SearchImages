@@ -2,6 +2,9 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+
+
 
 }
 
@@ -21,7 +24,6 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -29,8 +31,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    hilt {
+        enableAggregatingTask = true
+    }
+
+
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 }
 
@@ -55,12 +63,14 @@ dependencies {
 
     implementation "com.squareup.okhttp3:mockwebserver:4.9.1"
 
+    //pagination
+    implementation "androidx.paging:paging-runtime-ktx:3.1.1"
 
     //Room Database
-    implementation "androidx.room:room-runtime:2.5.0-alpha02"
-    implementation "androidx.room:room-ktx:2.5.0-alpha02"
-    implementation "androidx.room:room-paging:2.5.0-alpha02"
-    kapt "androidx.room:room-compiler:2.5.0-alpha02"
+    implementation "androidx.room:room-runtime:2.4.0-rc01"
+    implementation "androidx.room:room-ktx:2.4.0-rc01"
+    implementation "androidx.room:room-paging:2.4.0-rc01"
+    kapt "androidx.room:room-compiler:2.4.0-rc01"
 
     //Dagger - Hilt
     implementation "com.google.dagger:hilt-android:2.38.1"
@@ -68,5 +78,9 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
 
+
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
+    implementation "com.squareup.okhttp3:okhttp:4.9.1"
+    implementation "com.squareup.okhttp3:mockwebserver:4.9.1"
 
 }

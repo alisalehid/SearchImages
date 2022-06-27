@@ -2,6 +2,10 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+
+
 
 }
 
@@ -26,10 +30,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
+    hilt {
+        enableAggregatingTask = true
     }
 
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
+    }
     buildFeatures {
 
         dataBinding = true
@@ -52,15 +61,18 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
 
+    implementation project(':data')
+
     //Dagger - Hilt
     implementation "com.google.dagger:hilt-android:2.38.1"
     kapt "com.google.dagger:hilt-android-compiler:2.38.1"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
 
+    implementation "androidx.activity:activity-ktx:1.4.0"
+
 
     implementation "androidx.room:room-paging:2.5.0-alpha02"
-
 
 
     implementation 'com.github.bumptech.glide:glide:4.13.0'
@@ -68,6 +80,7 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
+    implementation "com.squareup.okhttp3:okhttp:4.9.1"
 
 
 

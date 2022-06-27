@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.payback.data.Constants.DATABASE_NAME
 import com.payback.data.local.db.dao.ImageDao
-import com.payback.data.local.db.dao.RemoteKeyDao
 import com.payback.data.local.Image
+import com.payback.data.local.db.dao.RemoteKeyDao
 import javax.inject.Singleton
 
 
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 
 @Database(
 
-    entities = [Image::class, RemoteKeyDao::class],
+    entities = [Image::class, RemoteKey::class],
     version = 1, exportSchema = false
 )
 @Singleton

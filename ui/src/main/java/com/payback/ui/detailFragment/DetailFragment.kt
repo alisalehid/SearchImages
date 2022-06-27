@@ -7,9 +7,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
-import com.payback.ui.mainActivity.MainActivityViewModel
 import com.payback.ui.R
 import com.payback.ui.databinding.FragmentDetailBinding
+import com.payback.ui.mainActivity.MainActivityViewModel
 import com.payback.ui.utilities.changeStatusBar
 import com.payback.ui.utilities.setToolbar
 import dagger.hilt.android.AndroidEntryPoint

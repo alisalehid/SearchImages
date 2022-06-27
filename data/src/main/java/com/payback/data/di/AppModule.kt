@@ -2,6 +2,7 @@ package com.payback.data.di
 
 import android.app.Application
 import android.content.Context
+import com.payback.data.BuildConfig
 import com.payback.data.Constants
 import com.payback.data.Constants.CACHE_NAME
 import com.payback.data.Constants.IMAGE_TYPE
@@ -21,11 +22,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import okhttp3.logging.HttpLoggingInterceptor
+
 
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    private val loggingInterceptor =
+        HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
     @Provides
     @Singleton
@@ -82,5 +88,19 @@ object AppModule {
             File(app.applicationContext.cacheDir, CACHE_NAME),
             10485760L
         )
+    }
+
+    @Provides
+    @Singleton
+    fun providesOkHttpClient(cache: Cache): OkHttpClient {
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(apiInterceptor)
+            .addInterceptor(cacheInterceptor)
+            .cache(cache)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+        if (BuildConfig.DEBUG) okHttpClient.addInterceptor(loggingInterceptor)
+        return okHttpClient.build()
     }
 }
