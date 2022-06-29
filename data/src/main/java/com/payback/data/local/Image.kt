@@ -16,6 +16,7 @@ data class Image(
     val user: String,
     val user_id: Int,
     val views: Int,
-    var searchTerm: String? = null
+    var searchTerm: String? = null ,
+    val userImageURL : String
 
     )

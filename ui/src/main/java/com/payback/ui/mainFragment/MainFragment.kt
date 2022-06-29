@@ -3,22 +3,25 @@ package com.payback.ui.mainFragment
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.payback.data.local.Image
 import com.payback.ui.R
 import com.payback.ui.adapter.ImagesAdapter
@@ -31,6 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main) {
@@ -56,6 +60,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 //            adapter.refresh()
 //        }
 
+
+        binding.appCompatButton.setOnClickListener {
+
+            searchImages(binding.textInputSearch.text.toString()  , true)
+        }
+
     }
 
     private fun setUpAdapter() {
@@ -71,23 +81,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             2
         }
 
-        val gridLayoutManager = GridLayoutManager(requireContext(), gridLayoutSpan)
+        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                val viewType = adapter.getItemViewType(position)
-                return if (viewType == 2 ) 1
-                else gridLayoutSpan
-            }
-        }
-        binding.recyclerview.layoutManager = gridLayoutManager
+        binding.recyclerview.layoutManager = layoutManager
         binding.recyclerview.adapter = adapter
         binding.recyclerview.adapter = adapter.withLoadStateFooter(
             footer = StateAdapter { retry() }
         )
 
         adapter.addLoadStateListener { state ->
-            binding.progressBarItem.isVisible = state.refresh is LoadState.Loading
+            binding.waitingProgress.isVisible = state.refresh is LoadState.Loading
 
             binding.empty.isVisible =
                 state.refresh is LoadState.NotLoading && adapter.itemCount == 0
@@ -117,8 +120,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun setSearchViewListener() {
         binding.textInputSearch.apply {
-            addTextChangedListener { text: Editable? ->
-//                binding.cancelSearch.isVisible = text.toString().isNotEmpty()
+            addTextChangedListener { _: Editable? ->
+//                binding.se.isVisible = text.toString().isNotEmpty()
             }
             setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -134,13 +137,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 false
             })
         }
-//        binding.cancelSearch.setOnClickListener {
-//            binding.textInputSearch.apply {
-//                text = null
-//                requestFocus()
-//            }
-//            showSoftKeyboard()
-//        }
+
     }
 
     private fun navigate(image: Image, imageView: ImageView) {
@@ -169,11 +166,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
-    private fun showSoftKeyboard() {
-        requireActivity().apply {
-            WindowInsetsControllerCompat(window, window.decorView).show(WindowInsetsCompat.Type.ime())
-        }
-    }
 
     override fun onResume() {
         super.onResume()

@@ -9,8 +9,7 @@ import javax.inject.Inject
 class Search @Inject constructor(private val searchImagesRepository: SearchImagesRepository){
 
     @OptIn(ExperimentalPagingApi::class)
-    suspend fun invoke(load: String): Flow<PagingData<Image>>{
-
+     fun invoke(load: String): Flow<PagingData<Image>>{
         return searchImagesRepository.searchImages(load)
     }
 }

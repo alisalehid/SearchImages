@@ -4,7 +4,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.payback.data.local.Image
@@ -23,9 +22,8 @@ class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :
                 image = imagePassed
                 tags.isSelected = true
                 root.setOnClickListener {
-//                    clicked.invoke(imagePassed, imageView)
+                    clicked.invoke(imagePassed, imageView)
 
-                    Log.d("payback" , "click")
                 }
             }
         }
