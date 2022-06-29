@@ -41,7 +41,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
 
     private lateinit var binding: FragmentMainBinding
-    private val adapter = ImagesAdapter { image, imageView -> navigate(image, imageView) }
+    private val adapter = ImagesAdapter { image, imageView , user -> navigate(image, imageView , user) }
     private val viewModel: MainActivityViewModel by activityViewModels()
     private var gridLayoutSpan = 2
     private var isInitiated = false
@@ -140,10 +140,15 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     }
 
-    private fun navigate(image: Image, imageView: ImageView) {
+    private fun navigate(image: Image, imageView: ImageView , user : ImageView) {
         viewModel.image = image
         val extras = FragmentNavigatorExtras(
             imageView to image.largeImageURL
+
+        )
+        val userImg = FragmentNavigatorExtras(
+
+            user to image.userImageURL
         )
         val action = MainFragmentDirections.actionMainFragmentToDetailFragment()
         findNavController().navigate(action, extras)

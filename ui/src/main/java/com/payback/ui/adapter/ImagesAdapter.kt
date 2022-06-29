@@ -11,18 +11,20 @@ import com.payback.ui.databinding.ImageCardItemBinding
 import com.payback.ui.utilities.imageCallBack
 
 
-class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :
+class ImagesAdapter(private val clicked: (Image, ImageView , ImageView) -> Unit) :
     PagingDataAdapter<Image, ImagesAdapter.ImageViewHolder>(imageCallBack) {
 
     inner class ImageViewHolder(private val binding: ImageCardItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+
         fun bind(imagePassed: Image) {
             binding.apply {
                 image = imagePassed
                 tags.isSelected = true
+                circularImageView.isSelected = true
                 root.setOnClickListener {
-                    clicked.invoke(imagePassed, imageView)
+                    clicked.invoke(imagePassed, imageView , circularImageView)
 
                 }
             }
