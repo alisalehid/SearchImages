@@ -1,6 +1,5 @@
 package com.payback.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -11,18 +10,23 @@ import com.payback.ui.databinding.ImageCardItemBinding
 import com.payback.ui.utilities.imageCallBack
 
 
-class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :
+class ImagesAdapter(private val clicked: (Image, ImageView , ImageView) -> Unit , private val onItemClickListener: OnItemClickListener) :
     PagingDataAdapter<Image, ImagesAdapter.ImageViewHolder>(imageCallBack) {
 
-    inner class ImageViewHolder(private val binding: ImageCardItemBinding) :
+    inner class ImageViewHolder(private val binding: ImageCardItemBinding , onItemClickListener: OnItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
+
 
         fun bind(imagePassed: Image) {
             binding.apply {
                 image = imagePassed
                 tags.isSelected = true
+                circularImageView.isSelected = true
                 root.setOnClickListener {
-                    clicked.invoke(imagePassed, imageView)
+
+
+                    onItemClickListener.onClick(adapterPosition , imagePassed, imageView , circularImageView)
+//                    clicked.invoke(imagePassed, imageView , circularImageView)
 
                 }
             }
@@ -33,7 +37,8 @@ class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :
         return ImageViewHolder(
             ImageCardItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            )
+
+            ), onItemClickListener
         )
     }
 
@@ -49,5 +54,12 @@ class ImagesAdapter(private val clicked: (Image, ImageView) -> Unit) :
         } else {
             2
         }
+    }
+
+    interface OnItemClickListener {
+
+        fun onClick(position: Int , image : Image , selectedImage : ImageView , userImage : ImageView )
+
+
     }
 }

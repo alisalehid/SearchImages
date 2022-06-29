@@ -1,5 +1,5 @@
 <resources>
-    <string name="no_result">nothing found </string>
+    <string name="no_result">Sorry we didn\'t find any results matching this search </string>
     <string name="nothing">nothing</string>
     <string name="try_again">try_again</string>
     <string name="are_you_sure">Are you sure?</string>

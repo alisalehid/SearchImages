@@ -1,12 +1,12 @@
 package com.payback.ui.mainFragment
 
+import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -16,11 +16,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.payback.data.local.Image
 import com.payback.ui.R
@@ -37,11 +35,11 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class MainFragment : Fragment(R.layout.fragment_main) {
+class MainFragment : Fragment(R.layout.fragment_main) , ImagesAdapter.OnItemClickListener  {
 
 
     private lateinit var binding: FragmentMainBinding
-    private val adapter = ImagesAdapter { image, imageView -> navigate(image, imageView) }
+    private val adapter = ImagesAdapter({ image, imageView , user -> navigate(image, imageView) } , this)
     private val viewModel: MainActivityViewModel by activityViewModels()
     private var gridLayoutSpan = 2
     private var isInitiated = false
@@ -144,6 +142,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         viewModel.image = image
         val extras = FragmentNavigatorExtras(
             imageView to image.largeImageURL
+
         )
         val action = MainFragmentDirections.actionMainFragmentToDetailFragment()
         findNavController().navigate(action, extras)
@@ -171,6 +170,31 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         super.onResume()
         requireActivity().changeStatusBar(true)
         hideSoftKeyboard()
+    }
+
+    override fun onClick(
+        position: Int,
+        image: Image,
+        selectedImage: ImageView,
+        userImage: ImageView
+    ) {
+
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle("are you sure")
+        builder.setMessage("do you want to see the image's details ?")
+
+        builder.setPositiveButton(android.R.string.yes) { _, _ ->
+
+
+            navigate( image , selectedImage)
+
+        }
+
+        builder.setNegativeButton(android.R.string.no) { _, _ ->
+
+        }
+
+        builder.show()
     }
 
 }

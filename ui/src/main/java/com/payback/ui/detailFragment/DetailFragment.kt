@@ -29,12 +29,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         binding.image = viewModel.image
         loadTransition()
 
-        binding.toolbar.apply {
-            setToolbar(this)
-            setNavigationOnClickListener {
-                findNavController().navigateUp()
-            }
-        }
+
 
     }
 

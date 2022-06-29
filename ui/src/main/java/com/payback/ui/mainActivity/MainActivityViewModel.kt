@@ -22,7 +22,7 @@ class MainActivityViewModel @Inject constructor(
     var currentSearch = defaultWord
 
 
-    suspend fun searchForImage(searchString: String) : Flow<PagingData<Image>> {
+     fun searchForImage(searchString: String) : Flow<PagingData<Image>> {
 
         currentSearch = searchString
         return search.invoke(searchString)

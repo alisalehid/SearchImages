@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
@@ -13,14 +14,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/black"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/blue"
+       >
 
         <ImageView
             android:id="@+id/imageView"
@@ -29,16 +24,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-             />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.38" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="?actionBarSize"
-            android:background="#BF000000"
+            android:background="@color/blue"
             android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            app:layout_constraintVertical_bias="1.0">
 
             <TextView
                 android:id="@+id/username"
@@ -48,6 +46,7 @@
                 android:text="@{image.user}"
                 android:textColor="@color/white"
                 android:textStyle="bold"
+                android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,8 +55,7 @@
                 modelTags="@{image.tags}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="?attr/colorSecondary"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/username" />
 
@@ -66,24 +64,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:drawablePadding="5dp"
+                android:drawablePadding="10dp"
+                android:layout_marginEnd="20dp"
                 android:text="@{String.valueOf(image.likes)}"
-                android:textColor="@color/white"
-                app:drawableStartCompat="@drawable/ic_favorite"
+                android:textColor="#BEFFFFFF"
+                app:drawableTopCompat="@drawable/ic_twotone_thumb_up_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tags" />
+                app:layout_constraintTop_toBottomOf="@id/tags"
+                app:layout_constraintVertical_bias="0.73" />
 
             <TextView
                 android:id="@+id/comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:drawablePadding="5dp"
+                android:layout_marginEnd="20dp"
+                android:drawablePadding="10dp"
                 android:text="@{String.valueOf(image.comments)}"
-                android:textColor="@color/white"
-                app:drawableStartCompat="@drawable/ic_comment"
+                android:textColor="#BEFFFFFF"
+                app:drawableTopCompat="@drawable/ic_twotone_chat_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/likes"
                 app:layout_constraintTop_toBottomOf="@id/tags" />
@@ -93,11 +93,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:drawablePadding="5dp"
+                android:layout_marginEnd="20dp"
+                android:drawablePadding="10dp"
                 android:text="@{String.valueOf(image.downloads)}"
-                android:textColor="@color/white"
-                app:drawableStartCompat="@drawable/ic_downward"
+                android:textColor="#BEFFFFFF"
+                app:drawableTopCompat="@drawable/ic_twotone_cloud_download_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/comments"
                 app:layout_constraintTop_toBottomOf="@id/tags" />
