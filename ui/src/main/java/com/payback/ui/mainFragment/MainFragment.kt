@@ -108,15 +108,11 @@ class MainFragment : Fragment(R.layout.fragment_main) , ImagesAdapter.OnItemClic
             if (isUserInitiated) adapter.submitData(PagingData.empty())
             viewModel.searchForImage(searchString).collectLatest {
                 adapter.submitData(it)
-                saveLocal()
             }
         }
     }
 
-    private fun saveLocal() {
 
-        val database : Room.databaseBuilder()
-    }
 
     private fun setSearchViewListener() {
         binding.textInputSearch.apply {
