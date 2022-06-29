@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import com.payback.data.local.Image
 import com.payback.ui.R
 import com.payback.ui.adapter.ImagesAdapter
@@ -54,13 +55,8 @@ class MainFragment : Fragment(R.layout.fragment_main) , ImagesAdapter.OnItemClic
 
         if (!isInitiated) init()
 
-//        binding.retryBtn.setOnClickListener {
-//            adapter.refresh()
-//        }
-
 
         binding.appCompatButton.setOnClickListener {
-
             searchImages(binding.textInputSearch.text.toString()  , true)
         }
 
@@ -112,14 +108,20 @@ class MainFragment : Fragment(R.layout.fragment_main) , ImagesAdapter.OnItemClic
             if (isUserInitiated) adapter.submitData(PagingData.empty())
             viewModel.searchForImage(searchString).collectLatest {
                 adapter.submitData(it)
+                saveLocal()
             }
         }
+    }
+
+    private fun saveLocal() {
+
+        val database : Room.databaseBuilder()
     }
 
     private fun setSearchViewListener() {
         binding.textInputSearch.apply {
             addTextChangedListener { _: Editable? ->
-//                binding.se.isVisible = text.toString().isNotEmpty()
+                binding.textInputSearch.isVisible = text.toString().isNotEmpty()
             }
             setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -164,7 +166,6 @@ class MainFragment : Fragment(R.layout.fragment_main) , ImagesAdapter.OnItemClic
             WindowInsetsControllerCompat(window, window.decorView).hide(WindowInsetsCompat.Type.ime())
         }
     }
-
 
     override fun onResume() {
         super.onResume()
